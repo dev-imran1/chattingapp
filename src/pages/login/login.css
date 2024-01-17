@@ -1,0 +1,114 @@
+.loginbox{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loginbox__inner{
+    width: 378px;
+}
+.auth_heading{
+    color: #03014C;
+    font-size: 33px;
+    text-transform: capitalize;
+    font-weight: 700;
+    font-family: 'Open Sans', sans-serif;
+}
+.provider_login{
+    border: 1px solid #03014C;
+    border-radius: 8px;
+    padding: 20px 30px;
+    display: inline-flex;
+    align-items: center;
+    column-gap: 10px;
+    margin-top: 30px;
+}
+.provider_login span{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: #03014C;
+    font-weight: 600;
+}
+.from_main{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.login__input-field{
+    width: 100%;
+}
+.loginBtn{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px !important;
+    font-weight: 600;
+    padding: 20px 0 !important;
+    background-color: #5f34f5 !important;
+    color: white;
+    border-radius: 8px !important;
+    -webkit-border-radius: 8px !important;
+    -moz-border-radius: 8px !important;
+    -ms-border-radius: 8px !important;
+    -o-border-radius: 8px !important;
+}
+.login__auth{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: #03014C;
+    font-weight: 500;
+    margin-top: 35px;
+}
+.login__auth a, .login__auth span{
+    color: #EA6C00;
+    font-size: 14px;
+    font-weight: 700;
+    padding-left: 3px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.loginimg{
+    width: 100%;
+    height: 100vh;
+    /* box-sizing: border-box;
+    overflow: hidden; */
+    object-fit: cover;
+}
+.loginimg img{
+    width: 100%;
+    height: 100%;
+}
+.eye{
+    /* display: flex;
+    align-items: center;
+    right: 10%; */
+    position: relative;
+}
+.eyeBtn{
+    position: absolute;
+    top: 45%;
+    right: 2%;
+}
+.forgot_box{
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.forgot_box h2{
+    margin-bottom: 30px;
+}
+.modal__btn{
+    position: relative;
+}
+.close_modal{
+    position: absolute;
+    outline: none;
+    border: none;
+    right: 0;
+    background: none;
+}
+.close_modal--icon{
+    width: 25px;
+    height: 25px;
+}
