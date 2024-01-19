@@ -12,6 +12,9 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { Box,Modal} from '@mui/material';
 import { SlClose } from "react-icons/sl";
+import Alert from '@mui/material/Alert';
+
+
 
 
 
@@ -30,23 +33,74 @@ const style = {
 }; 
 // modal state end
 const Login = () => {
+
   let [password, setPassowrd] = useState(false);
-  const [open, setOpen] = React.useState(false);
+  let [open, setOpen] = React.useState(false);
+  let [fromData, SetfromData] = useState({
+    email : "",
+    password : "",
+    forgotEmail : ""
+  })
+  let [error, setError] = useState({
+    email : "",
+    password : "",
+    forgotEmail : ""
+  })
+
+
+  let emailRegex =/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+  var passRegex = /^[A-Za-z]\w{7,14}$/
+
+
   const handleOpen = () => setOpen(true);
+
   const handleClose = () => setOpen(false);
 
-  // let handelPassword =()=>{
-  //   if(open){
-  //     setOpen(false)
-  //   }else{
-  //     setOpen(true)
-  //   }
-  // }
-  
+  let handelFrom = (e) =>{
+    let {name, value} = e.target;
+    SetfromData({
+      ...fromData,
+      [name] : value
+    })
+  }
 
   let handleModalClose =()=>{
-    setOpen(false)
+    if(!fromData.forgotEmail){
+      setError({forgotEmail: "type your Email"})
+    }else if(!fromData.forgotEmail.match(emailRegex)){
+      setError({forgotEmail: "Wrong Formate"})
+    }else{
+      handleClose(false)
+      setError({forgotEmail: ""})
+      console.log("ok");
+    }
   }
+  let handelLogin = () =>{
+    if(!fromData.email){
+      setError({email : "type your email"})
+    }
+    else if(!fromData.email.match(emailRegex)){
+      setError({email : "Wrong Email"})
+    }
+    else if(!fromData.password){
+    setError({password: "input your password"})
+  }
+  // else if(!fromData.password.match(passRegex)){
+  //   setError({password: "Please type strong password"})
+  //   }
+    else{
+      setError({
+        email : "",
+        password : "",
+        forgotEmail : ""
+      })
+      console.log("ok all");
+    }
+  }
+
+  // console.log(fromData.forgotEmail);
+
   return (
     <>    
     <div>
@@ -62,10 +116,23 @@ const Login = () => {
             <div className='from_main'>
 
               <div>
-               <Input name="email" variant="standard" labelText="Email Add" style="login__input-field" type="email"/>
+               <Input onChange={handelFrom} name="email" variant="standard" labelText="Email Add" style="login__input-field" type="email"/>              
+               {
+                error.email &&
+               <Alert variant="filled" severity="error">
+                  {error.email}
+                </Alert>
+               }
               </div>
+
               <div className='eye'>
-                  <Input name="password" variant="standard" labelText="Type Password" style="login__input-field" type={password ? "text" : "password"}/>
+              <Input onChange={handelFrom} name="password" variant="standard" labelText="Type Password" style="login__input-field" type={password ? "text" : "password"}/>
+              {
+              error.password &&
+                <Alert variant="filled" severity="error">
+                  {error.password}
+                </Alert>
+              }
                 <div>
                 {
                   password
@@ -76,7 +143,7 @@ const Login = () => {
                 }
                 </div>
               </div>
-             <CustomButton styleing="loginBtn" variant="contained" btnText="Login to Continue"/>
+             <CustomButton  onClick={handelLogin} styleing="loginBtn" variant="contained" btnText="Login to Continue"/>
             </div>
             <p className='login__auth'>
               Forgot Password ?
@@ -94,7 +161,7 @@ const Login = () => {
     </Grid>
   </div>
 
-  {/* modal start */}
+  {/*forgot password modal start */}
     <Modal
     open={open}
     onClose={handleClose}
@@ -107,8 +174,22 @@ const Login = () => {
       </div>
       <div className='forgot_box'>
       <h2>Forgot Password</h2>
-      <Input name="email" variant="standard" labelText="Email Add" style="login__input-field" type="email"/>
-      <CustomButton onClick={handleModalClose} btnText="Send Link" styleing="loginBtn" variant="contained"/>
+      <div>
+      <Input onChange={handelFrom} name="forgotEmail" variant="standard" labelText="Email Add" style="login__input-field" type="email"/>
+      {
+        error.forgotEmail &&
+        <Alert variant="filled" severity="error">
+        {error.forgotEmail}
+      </Alert>
+      }
+      </div>
+        <CustomButton onClick={handleModalClose} btnText="Send Link" styleing="loginBtn" variant="contained"/>
+        {/* {
+          fromData.forgotEmail &&
+        <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+          Here is a gentle confirmation that your action was successful.
+        </Alert>
+        } */}
       </div>
     </Box>
   </Modal>
