@@ -50,7 +50,7 @@ const Login = () => {
 
   let emailRegex =/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-  var passRegex = /^[A-Za-z]\w{7,14}$/
+  let passRegex = /^[A-Za-z]\w{7,14}$/
 
 
   const handleOpen = () => setOpen(true);
@@ -86,9 +86,9 @@ const Login = () => {
     else if(!fromData.password){
     setError({password: "input your password"})
   }
-  // else if(!fromData.password.match(passRegex)){
-  //   setError({password: "Please type strong password"})
-  //   }
+  else if(fromData.password.match(passRegex)){
+    setError({password: "Please type strong password"})
+    }
     else{
       setError({
         email : "",
