@@ -15,10 +15,6 @@ import { SlClose } from "react-icons/sl";
 import Alert from '@mui/material/Alert';
 
 
-
-
-
-
 // modal state start
 const style = {
   position: 'absolute',
