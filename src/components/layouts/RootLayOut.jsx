@@ -8,12 +8,14 @@ const RootLayOut = () => {
   return (
     <>
         <div>
-    <Grid container>
-      <Grid item xs={1}>
+    <Grid container spacing={8}>
+      <Grid item xs={2}>
         <Sidebar />
       </Grid>
-      <Grid item xs={11}>
-        <Outlet />
+      <Grid item xs={10}>
+        <div className='outlet_box'>
+          <Outlet />
+        </div>
       </Grid>
     </Grid>
   </div>

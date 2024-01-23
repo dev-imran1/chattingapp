@@ -67,7 +67,7 @@ const Login = () => {
     }else if(!fromData.forgotEmail.match(emailRegex)){
       setError({forgotEmail: "Wrong Formate"})
     }else{
-      handleClose(false)
+      handleClose(true)
       setError({forgotEmail: ""})
       console.log("ok");
     }
@@ -82,14 +82,14 @@ const Login = () => {
     else if(!fromData.password){
     setError({password: "input your password"})
   }
-  else if(fromData.password.match(passRegex)){
-    setError({password: "Please type strong password"})
-    }
+  // else if(fromData.password.match(passRegex)){
+  //   setError({password: "Please type strong password"})
+  //   }
     else{
       setError({
-        email : "",
-        password : "",
-        forgotEmail : ""
+        email: "",
+        password: "",
+        forgotEmail: ""
       })
       console.log("ok all");
     }
@@ -166,7 +166,7 @@ const Login = () => {
   >
     <Box sx={style}>
       <div className='modal__btn'>
-        <button className='close_modal' onClick={handleModalClose}><SlClose className='close_modal--icon'/></button>
+        <button className='close_modal' onClick={handleModalClose}><SlClose onClick={handleClose} className='close_modal--icon'/></button>
       </div>
       <div className='forgot_box'>
       <h2>Forgot Password</h2>

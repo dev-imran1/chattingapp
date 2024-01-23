@@ -18,7 +18,6 @@ const Sidebar = () => {
         <div className='sidebar_img-box'>
             <Image source='/' alt="image" style='sidebar_logo'/>
             <div>
-
             <h3 className='username'>Siam Talukder</h3>
             </div>
         </div>
@@ -43,7 +42,6 @@ const Sidebar = () => {
         <div>
             <IoMdLogOut className='sidebar_menu'/>
         </div>
-        <p>28.00 minute</p>
     </div>
     </>
   )
