@@ -18,7 +18,8 @@ const Mygroup = () => {
           </div>
           <div>
             <button className='addbtn'>
-              <p>2 pm</p>
+              <p>2 pmo
+              </p>
             </button>
           </div>
         </div>

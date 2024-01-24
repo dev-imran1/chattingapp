@@ -5,7 +5,8 @@ import Image from '../../utilities/Image'
 const GroupList = () => {
   return (
     <>
-    <GroupCard sarch='input' cardTitle="Group List" >
+    <GroupCard cardTitle="Group List" >
+    {/* <GroupCard sarch='input' cardTitle="Group List" > */}
         <div className='usermainbox'>
             {[0,1,2,3,4,5,6,7,8].map((item,index)=>(
           <div className='useritem'>
