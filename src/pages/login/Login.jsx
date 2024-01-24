@@ -13,7 +13,8 @@ import { FaEyeSlash } from "react-icons/fa";
 import { Box,Modal} from '@mui/material';
 import { SlClose } from "react-icons/sl";
 import Alert from '@mui/material/Alert';
-
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 // modal state start
 const style = {
@@ -29,7 +30,8 @@ const style = {
 }; 
 // modal state end
 const Login = () => {
-
+  const navigate = useNavigate()
+  const auth = getAuth();
   let [password, setPassowrd] = useState(false);
   let [open, setOpen] = React.useState(false);
   let [fromData, SetfromData] = useState({
@@ -58,6 +60,11 @@ const Login = () => {
     SetfromData({
       ...fromData,
       [name] : value
+    })
+    setError({
+      email : "",
+      password : "",
+      forgotEmail : ""
     })
   }
 
@@ -92,6 +99,21 @@ const Login = () => {
         forgotEmail: ""
       })
       console.log("ok all");
+      signInWithEmailAndPassword(auth,fromData.email, fromData.password).then((userCredential)=>{
+        console.log("Email verification sent!");
+        navigate("/home")
+
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        if(errorCode == "auth/invalid-credential"){
+          setError({email: "email or password wrong"})
+        }else{
+          setError({email: ""})
+        }
+        console.log(errorMessage);
+      });
+
     }
   }
 

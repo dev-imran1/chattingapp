@@ -9,7 +9,7 @@ const GroupList = () => {
     {/* <GroupCard sarch='input' cardTitle="Group List" > */}
         <div className='usermainbox'>
             {[0,1,2,3,4,5,6,7,8].map((item,index)=>(
-          <div className='useritem'>
+          <div className='useritem' key={index}>
             <div className='userimgbox'>
               <Image source="/" alt="image"/>
             </div>

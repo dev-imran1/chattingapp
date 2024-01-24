@@ -9,7 +9,8 @@ const UserList = () => {
     <>
           <GroupCard cardTitle="User List" >
         <div className='usermainbox'>
-          <div className='useritem'>
+          {[0,1,2,3,4,5,6,7].map((item,index)=>(
+          <div className='useritem' key={index}>
             <div className='userimgbox'>
               <Image source="/" alt="image"/>
             </div>
@@ -25,86 +26,7 @@ const UserList = () => {
               </div>
             </div>
           </div>
-          <div className='useritem'>
-            <div className='userimgbox'>
-              <Image source="/" alt="image"/>
-            </div>
-            <div className='user_info-box'>
-              <div>
-                <h3>siam talukder</h3>
-                <p>backend developer</p>
-              </div>
-              <div>
-                <button className='addbtn'>
-                  <FaPlus />
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className='useritem'>
-            <div className='userimgbox'>
-              <Image source="/" alt="image"/>
-            </div>
-            <div className='user_info-box'>
-              <div>
-                <h3>siam talukder</h3>
-                <p>backend developer</p>
-              </div>
-              <div>
-                <button className='addbtn'>
-                  <FaPlus />
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className='useritem'>
-            <div className='userimgbox'>
-              <Image source="/" alt="image"/>
-            </div>
-            <div className='user_info-box'>
-              <div>
-                <h3>siam talukder</h3>
-                <p>backend developer</p>
-              </div>
-              <div>
-                <button className='addbtn'>
-                  <FaPlus />
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className='useritem'>
-            <div className='userimgbox'>
-              <Image source="/" alt="image"/>
-            </div>
-            <div className='user_info-box'>
-              <div>
-                <h3>siam talukder</h3>
-                <p>backend developer</p>
-              </div>
-              <div>
-                <button className='addbtn'>
-                  <FaPlus />
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className='useritem'>
-            <div className='userimgbox'>
-              <Image source="/" alt="image"/>
-            </div>
-            <div className='user_info-box'>
-              <div>
-                <h3>siam talukder</h3>
-                <p>backend developer</p>
-              </div>
-              <div>
-                <button className='addbtn'>
-                  <FaPlus />
-                </button>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </GroupCard>
     </>

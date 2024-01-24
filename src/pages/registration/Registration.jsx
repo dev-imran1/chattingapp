@@ -9,10 +9,18 @@ import ReginImg from '../../assets/images/regimg.png';
 import Image from '../../utilities/Image';
 import '../registration/registration.css'
 import Alert from '@mui/material/Alert';
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification} from "firebase/auth";
+import { Rings } from 'react-loader-spinner';
+import { useNavigate } from "react-router-dom";
+
 
 
 const Registration = () => {
+  const auth = getAuth();
+  const navigate = useNavigate();
 
+
+  let [loader, setLoader] = useState(false);
   let [singupData, setSignupdata] = useState({
     email : '',
     fullname: '',
@@ -51,12 +59,38 @@ const Registration = () => {
       setError({password: "password error"});
     }
     else{
+      setLoader(true)
       setError({
         email : '',
         fullname: '',
         password : ''
       })
-      console.log('done');
+      createUserWithEmailAndPassword(auth, singupData.email, singupData.password).then((userCredential)=>{
+        sendEmailVerification(auth.currentUser)
+        console.log(auth.currentUser);
+        navigate("/")
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        if(errorCode == "auth/email-already-in-use"){
+          setError({email: "your email already exits"});
+        }else{
+          setError({email: ""})
+          console.log("your email verify pleace");
+        }
+      });
+      setSignupdata({
+        email: "",
+        fullname : "",
+        password: ""
+      })
+      setTimeout(() => {
+        setLoader(false)
+      }, 2000);
+      
+      // setLoader(false)
+      
+      
     }
   }
   return (
@@ -68,7 +102,7 @@ const Registration = () => {
             <SectionHeading style='auth_heading' text='Get started with easily register'/>
             <div className='from_main'>
               <div>
-                <Input onChange={handelFrom} name="email" variant="outlined" labelText="Email Add" style="login__input-field" type="email"/>
+                <Input onChange={handelFrom} value={singupData.email} name="email" variant="outlined" labelText="Email Add" style="login__input-field" type="email"/>
                 {error.email 
                 && 
                 // <p className='error'>{error.email}</p>
@@ -78,7 +112,7 @@ const Registration = () => {
                 }
               </div>
               <div>
-                <Input onChange={handelFrom} name="fullname" variant="outlined" labelText="Full Name" style="login__input-field" type="text"/>
+                <Input onChange={handelFrom} value={singupData.fullname} name="fullname" variant="outlined" labelText="Full Name" style="login__input-field" type="text"/>
                 {error.fullname 
                 && 
                 <Alert variant="filled" severity="error">
@@ -87,7 +121,7 @@ const Registration = () => {
                 }
               </div>
               <div>
-                <Input onChange={handelFrom} name="password" variant="outlined" labelText="Type Password" style="login__input-field" type="password"/>
+                <Input onChange={handelFrom} value={singupData.password} name="password" variant="outlined" labelText="Type Password" style="login__input-field" type="password"/>
                 {error.password 
                 &&
                 <Alert variant="filled" severity="error">
@@ -95,7 +129,22 @@ const Registration = () => {
                 </Alert>
                 }
               </div>
-             <CustomButton onClick={handelSubmit} styleing="loginBtn" variant="contained" btnText="Login to Continue"/>
+
+              {loader
+              ?
+              <Rings
+               visible={true}
+               height="80"
+               width="80"
+               color="#4fa94d"
+               ariaLabel="rings-loading"
+               wrapperStyle={{}}
+               wrapperClass=""
+               />
+              :
+              <CustomButton onClick={handelSubmit} styleing="loginBtn" variant="contained" btnText="Login to Continue"/>
+              }
+
             </div>
             <AuthNavigate style="login__auth" link="/" text="Already have an account ?" linkText="Sign in"/>
           </div>
