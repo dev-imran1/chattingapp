@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "jsx": "preserve",
+      "baseUrl": "./src",
+      "paths": {
+          "@/assets/*": ["./assets/*"],
+          "@/components/*": ["./components/*"],
+          "@/firebaseConfig/*": ["./firebaseConfig/*"],
+        "@/pages/*": ["./pages/*"],
+        "@/utilities/*": ["./utilities/*"],
+      },
+    },
+  }

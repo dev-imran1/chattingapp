@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import './login.css';
-import SectionHeading from '../../components/SectionHeading';
-import GoogleSvg from '../../../public/google.svg';
-import Input from '../../components/Input';
-import CustomButton from '../../components/CustomButton';
-import AuthNavigate from '../../components/AuthNavigate';
-import LoginImg from '../../assets/images/login.jpg';
-import Image from '../../utilities/Image';
+import SectionHeading from '@/components/SectionHeading';
+import GoogleSvg from '/google.svg';
+import Input from '@/components/Input';
+import CustomButton from '@/components/CustomButton';
+import AuthNavigate from '@/components/AuthNavigate';
+import LoginImg from '@/assets/images/login.jpg';
+import Image from '@/utilities/Image';
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { Box,Modal} from '@mui/material';
 import { SlClose } from "react-icons/sl";
 import Alert from '@mui/material/Alert';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword ,signOut} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
 // modal state start
 const style = {
@@ -32,6 +33,7 @@ const style = {
 const Login = () => {
   const navigate = useNavigate()
   const auth = getAuth();
+  
   let [password, setPassowrd] = useState(false);
   let [open, setOpen] = React.useState(false);
   let [fromData, SetfromData] = useState({
@@ -45,16 +47,11 @@ const Login = () => {
     forgotEmail : ""
   })
 
-
   let emailRegex =/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-
   let passRegex = /^[A-Za-z]\w{7,14}$/
 
-
   const handleOpen = () => setOpen(true);
-
   const handleClose = () => setOpen(false);
-
   let handelFrom = (e) =>{
     let {name, value} = e.target;
     SetfromData({
@@ -89,20 +86,23 @@ const Login = () => {
     else if(!fromData.password){
     setError({password: "input your password"})
   }
-  // else if(fromData.password.match(passRegex)){
-  //   setError({password: "Please type strong password"})
-  //   }
     else{
       setError({
         email: "",
         password: "",
         forgotEmail: ""
       })
-      console.log("ok all");
       signInWithEmailAndPassword(auth,fromData.email, fromData.password).then((userCredential)=>{
-        console.log("Email verification sent!");
-        navigate("/home")
-
+        if(userCredential.user.emailVerified){
+          console.log(userCredential.user)
+          navigate("/home")
+        }else{
+          // setError({email: "please verify your email"});
+          signOut(auth).then(()=>{
+            console.log("logout done");
+            // 50:10 minute
+          })
+        }
       }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -111,14 +111,9 @@ const Login = () => {
         }else{
           setError({email: ""})
         }
-        console.log(errorMessage);
       });
-
     }
   }
-
-  // console.log(fromData.forgotEmail);
-
   return (
     <>    
     <div>
@@ -132,7 +127,6 @@ const Login = () => {
               <span>Login with Google</span>
             </div>
             <div className='from_main'>
-
               <div>
                <Input onChange={handelFrom} name="email" variant="standard" labelText="Email Add" style="login__input-field" type="email"/>              
                {
@@ -213,9 +207,7 @@ const Login = () => {
   </Modal>
 
   {/* modal end */}
-    </>
-  
+    </>  
   )
 }
-
 export default Login

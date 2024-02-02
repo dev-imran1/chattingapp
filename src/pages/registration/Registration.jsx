@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
 import Grid from '@mui/material/Grid';
-import SectionHeading from '../../components/SectionHeading';
-import GoogleSvg from '../../../public/google.svg';
-import Input from '../../components/Input';
-import CustomButton from '../../components/CustomButton';
-import AuthNavigate from '../../components/AuthNavigate';
+import SectionHeading from '@/components/SectionHeading';
+import GoogleSvg from '/google.svg';
+import CustomButton from '@/components/CustomButton';
+import AuthNavigate from '@/components/AuthNavigate';
 import ReginImg from '../../assets/images/regimg.png';
-import Image from '../../utilities/Image';
+import Image from '@/utilities/Image';
 import '../registration/registration.css'
 import Alert from '@mui/material/Alert';
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, updateProfile} from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database";
 import { Rings } from 'react-loader-spinner';
 import { useNavigate } from "react-router-dom";
-
-
+import Input from '@/components/Input';
 
 const Registration = () => {
+  const db = getDatabase()
   const auth = getAuth();
   const navigate = useNavigate();
-
 
   let [loader, setLoader] = useState(false);
   let [singupData, setSignupdata] = useState({
@@ -31,9 +30,6 @@ const Registration = () => {
     fullname: '',
     password : ''
   })
-
-
-
   let handelFrom = (e) =>{
     let {name, value} = e.target;
     setSignupdata({
@@ -44,7 +40,6 @@ const Registration = () => {
 
   let emailRegex =/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-  
   let handelSubmit = () =>{
     if(!singupData.email){
       setError({email: "Type Your email"});
@@ -66,9 +61,20 @@ const Registration = () => {
         password : ''
       })
       createUserWithEmailAndPassword(auth, singupData.email, singupData.password).then((userCredential)=>{
-        sendEmailVerification(auth.currentUser)
-        console.log(auth.currentUser);
-        navigate("/")
+        sendEmailVerification(auth.currentUser).then(()=>{
+          updateProfile(auth.currentUser, {
+            displayName:singupData.fullname,
+            photoURL: "https://thenounproject.com/icon/user-avatar-2996002/"
+          }).then(()=>{
+            set(ref(db, 'users/'+ userCredential.user.uid), {
+              username: userCredential.user.displayName,
+              email: userCredential.user.email,
+              profileimg: userCredential.user.photoURL
+            }).then(()=>{
+              navigate("/");
+            })
+          })
+        })
       }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -87,10 +93,6 @@ const Registration = () => {
       setTimeout(() => {
         setLoader(false)
       }, 2000);
-      
-      // setLoader(false)
-      
-      
     }
   }
   return (

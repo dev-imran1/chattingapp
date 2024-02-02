@@ -1,12 +1,21 @@
+.sidebar__wrapper{
+    position: relative;
+    height: 100vh;
+    width: 100%;
+}
 .sidebar_box{
     display: flex;
+    /* position: fixed; */
     flex-direction: column;
     align-items: center;
     background-color: #5F35F5;
     justify-content: space-between;
     align-items: center;
     height: 100%;
+    width: 100%;
+    /* width: 100%; */
 }
+
 .sidebar_img-box{
     width: 100px;
     height: 100px;

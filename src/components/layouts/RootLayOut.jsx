@@ -8,7 +8,7 @@ const RootLayOut = () => {
   return (
     <>
         <div>
-    <Grid container spacing={8}>
+    <Grid container sx={{height:"100vh"}} spacing={8}>
       <Grid item xs={2}>
         <Sidebar />
       </Grid>
