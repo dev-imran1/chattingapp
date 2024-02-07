@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./layout.css";
 import { IoChatbubblesSharp } from "react-icons/io5";
 import { IoMdLogOut } from "react-icons/io";
@@ -11,32 +11,42 @@ import Image from '../../utilities/Image';
 // import Logo from '../../../public/logo.jpg'
 import { getAuth,signOut} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux'
+import { loginuser } from '../../slices/userSlice';
 
 
 const Sidebar = () => {
-    
+    const data = useSelector((state)=> state.loginuserdata.value)
     const auth = getAuth();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    useEffect (()=>{
+        if(!data){
+            navigate("/")
+        }
+    },[])
 
     let handelLogout = () =>{
-        
         signOut(auth).then(()=>{
+            localStorage.removeItem("user")
+            dispatch(loginuser(null))
             console.log("logOut done");
             navigate("/")
         })
     }
-
     const user = auth.currentUser;
-    // const userInfo = user.displayName
-    console.log(user)
   return (
     <>
     <div className="sidebar__wrapper">
     <div className='sidebar_box'>
         <div className='sidebar_img-box'>
-            <Image source={user && user.photoURL} alt="image" style='sidebar_logo'/>
             <div>
-            <h3 className='username'>{user && user.displayName}</h3>
+             <Image source={data && data.photoURL} alt="image" style='sidebar_logo'/>
+            </div>
+            <div>
+            <h3 className='username'>{data && data.displayName}</h3>
+            <p>{data && data.email}</p>
             </div>
         </div>
         <div>

@@ -64,7 +64,7 @@ const Registration = () => {
         sendEmailVerification(auth.currentUser).then(()=>{
           updateProfile(auth.currentUser, {
             displayName:singupData.fullname,
-            photoURL: "https://thenounproject.com/icon/user-avatar-2996002/"
+            photoURL: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Fphotos%2Fman&psig=AOvVaw1yw24lhNY7BGvC7xJWxh-0&ust=1707382313376000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCNDwm_XsmIQDFQAAAAAdAAAAABAE"
           }).then(()=>{
             set(ref(db, 'users/'+ userCredential.user.uid), {
               username: userCredential.user.displayName,

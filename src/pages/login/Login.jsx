@@ -14,8 +14,11 @@ import { Box,Modal} from '@mui/material';
 import { SlClose } from "react-icons/sl";
 import Alert from '@mui/material/Alert';
 import { getAuth, signInWithEmailAndPassword ,signOut} from "firebase/auth";
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
+import { loginuser } from '../../slices/userSlice';
+
 
 // modal state start
 const style = {
@@ -33,6 +36,7 @@ const style = {
 const Login = () => {
   const navigate = useNavigate()
   const auth = getAuth();
+  const dispatch = useDispatch();
   
   let [password, setPassowrd] = useState(false);
   let [open, setOpen] = React.useState(false);
@@ -94,7 +98,8 @@ const Login = () => {
       })
       signInWithEmailAndPassword(auth,fromData.email, fromData.password).then((userCredential)=>{
         if(userCredential.user.emailVerified){
-          console.log(userCredential.user)
+          localStorage.setItem("user", JSON.stringify(userCredential.user))
+          dispatch(loginuser(userCredential.user))
           navigate("/home")
         }else{
           // setError({email: "please verify your email"});
