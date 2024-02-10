@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import GroupCard from '../../components/home/GroupCard';
 import Image from '../../utilities/Image';
-import { getDatabase, ref, set, onValue } from "firebase/database";
+import { getDatabase, ref, set, onValue, remove } from "firebase/database";
 import { useSelector, useDispatch } from 'react-redux'
+import './home.css';
 
 const FriendRequest = () => {
   const db = getDatabase();
@@ -20,10 +21,17 @@ const FriendRequest = () => {
           arr.push({...item.val(), id:item.key});
           setFRequest(arr)
         }
-        console.log(data.uid == item.val().reciverid)
+        // console.log(data.uid == item.val().reciverid)
       })
     });
   },[])
+
+  let handelCancelFrequest = (cancelinfo) =>{
+    console.log(cancelinfo);
+    remove(ref(db, "frequest/" + cancelinfo.id)).then(()=>{
+      // console.log("request cancel")
+    })
+  }
 
   return (
     <>
@@ -41,9 +49,12 @@ const FriendRequest = () => {
                         <h3>{item.senderName}</h3>
                         <p>backend developer</p>
                     </div>
-                    <div>
+                    <div className='parentBtn'>
                         <button className='addbtn'>
                         <p>Accept</p>
+                        </button>
+                        <button onClick={()=>handelCancelFrequest(item)} className='addbtn'>
+                        <p>Cancel</p>
                         </button>
                     </div>
                     </div>

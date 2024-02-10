@@ -51,12 +51,18 @@
     justify-content: space-between;
     align-items: center;
 }
+.parentBtn{
+    display: flex;
+    gap: 10px;
+}
 .addbtn{
     border-radius: 8px;
     background-color: #5F35F5;
     padding: 10px 25px;
     cursor: pointer;
     color: #fff;
+    font-size: 18px;
+    font-weight: 600;
 }
 /* input{
     width: 100%;
