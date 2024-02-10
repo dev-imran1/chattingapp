@@ -34,11 +34,11 @@ const FriendRequest = () => {
             fRequest.map((item,index)=>(
                 <div key={index} className='useritem'>
                     <div className='userimgbox'>
-                    <Image source={fRequest.profileimg} alt="image"/>
+                    <Image source={item.senderimg} alt="image"/>
                     </div>
                     <div className='user_info-box'>
                     <div>
-                        <h3>{fRequest.username}</h3>
+                        <h3>{item.senderName}</h3>
                         <p>backend developer</p>
                     </div>
                     <div>

@@ -3,7 +3,7 @@ import GroupCard from '../../components/home/GroupCard'
 import Image from '../../utilities/Image'
 import { FaPlus } from 'react-icons/fa6'
 import './home.css';
-import { getDatabase, ref, set, onValue } from "firebase/database";
+import { getDatabase, ref, set, onValue, push } from "firebase/database";
 import { useSelector, useDispatch } from 'react-redux'
 
 
@@ -34,7 +34,7 @@ const UserList = () => {
   },[])
   // console.log(data)
   let handelFRequest = (frequestinfo) =>{
-    set(ref(db, 'frequest'), {
+    set(push(ref(db, 'frequest')), {
       senderid: data.uid,
       senderName: data.displayName,
       senderimg: data.photoURL,
