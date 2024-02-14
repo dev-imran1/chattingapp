@@ -10,30 +10,30 @@ import { useSelector, useDispatch } from 'react-redux'
 const UserList = () => {
 
   const db = getDatabase();
-  const userCountRef = ref(db, 'users');
+  // const userCountRef = ref(db, 'users');
   const [userLists, setUserList] = useState();
   const dispatch = useDispatch();
-  const data = useSelector((state)=> state.loginuserdata.value)
+  const data = useSelector((state) => state.loginuserdata.value)
 
 
   // console.log(data.uid)
-    
 
-  useEffect(()=>{
+
+  useEffect(() => {
     const userRef = ref(db, 'users');
     onValue(userRef, (snapshot) => {
       let arr = []
-      snapshot.forEach((item)=>{
-        if(data.uid != item.key){
-          arr.push({...item.val(), id:item.key});
+      snapshot.forEach((item) => {
+        if (data.uid != item.key) {
+          arr.push({ ...item.val(), id: item.key });
           setUserList(arr)
         }
         // console.log(item.key)
       })
     });
-  },[])
+  }, [])
   // console.log(data)
-  let handelFRequest = (frequestinfo) =>{
+  let handelFRequest = (frequestinfo) => {
     set(push(ref(db, 'frequest')), {
       senderid: data.uid,
       senderName: data.displayName,
@@ -46,30 +46,30 @@ const UserList = () => {
   }
   return (
     <>
-          <GroupCard cardTitle="User List" >
+      <GroupCard cardTitle="User List" >
         <div className='usermainbox'>
-          {userLists && userLists.length > 0 
-          ?
-          userLists.map((item,index)=>(
-            <div className='useritem' key={index}>
-            <div className='userimgbox'>
-              <Image source={item.profileimg} alt="image"/>
-            </div>
-            <div className='user_info-box'>
-              <div>
-                <h3>{item.username}</h3>
-                <p>backend developer</p>
+          {userLists && userLists.length > 0
+            ?
+            userLists.map((item, index) => (
+              <div className='useritem' key={index}>
+                <div className='userimgbox'>
+                  <Image source={item.profileimg} alt="image" />
+                </div>
+                <div className='user_info-box'>
+                  <div>
+                    <h3>{item.username}</h3>
+                    <p>backend developer</p>
+                  </div>
+                  <div>
+                    <button className='addbtn' onClick={() => handelFRequest(item)}>
+                      <FaPlus />
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div>
-                <button className='addbtn' onClick={()=>handelFRequest(item)}>
-                  <FaPlus />
-                </button>
-              </div>
-            </div>
-          </div>
-          ))
-          :
-          <h2>not found</h2>
+            ))
+            :
+            <h2>not found</h2>
           }
         </div>
       </GroupCard>

@@ -13,7 +13,7 @@ import Home from './pages/home/Home';
 import Message from './pages/message/Message';
 import Notification from './pages/notification/Notification';
 import Setting from './pages/setting/Setting';
-
+import { ToastContainer, toast } from 'react-toastify';
 
 function App() {
   
@@ -33,9 +33,12 @@ function App() {
     ))
 
   return (
-      <RouterProvider
-        router={router}
-      />
+    <>
+    <RouterProvider
+      router={router}
+    />
+    <ToastContainer />
+    </>
   )
 }
 
